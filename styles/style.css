@@ -1,72 +1,146 @@
-/* Main */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+/*=============== GOOGLE FONTS ===============*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Rubik:wght@300;400;500;700&display=swap');
 
+/*=============== VARIABLES ===============*/
+:root {
+  /* Colors */
+  --color-black: #000;
+  --color-white: #fff;
+  --color-gray: #555;
+  --color-danger: #ff2233;
+  --color-overlay: rgba(0, 0, 0, 0.6);
+
+  /* Typography */
+  --body-font: 'Poppins', 'Rubik', sans-serif;
+  --title-font: 'Poppins', 'Rubik', sans-serif;
+  --font-light: 300;
+  --font-regular: 400;
+  --font-semi-bold: 600;
+  --font-bold: 700;
+
+  /* Font sizes */
+  --big-font-size: 2rem;
+
+  /* Border radius */
+  --radius-sm: 5px;
+  --radius-md: 10px;
+  --radius-lg: 15px;
+
+  /* Sizes */
+  --container-max-width: 550px;
+  --input-height: 40px;
+  --checkbox-size: 20px;
+  --delete-btn-height: 30px;
+  --modal-btn-height: 40px;
+  --check-line-height: 2px;
+
+  /* Spacing */
+  --body-padding-inline: 3rem;
+  --container-margin-top: 4rem;
+  --title-margin-bottom: 1rem;
+  --output-margin-top: 2rem;
+  --output-gap: 0.5rem;
+  --input-padding-inline: 0.5rem 0.13rem;
+  --text-gap: 0.25rem;
+  --btn-padding-inline: 10px;
+  --modal-padding: 1rem;
+
+  /* Borders */
+  --border-main: 2px solid var(--color-black);
+  --border-modal: 4px solid var(--color-black);
+  --border-cancel: 3px solid var(--color-danger);
+
+  /* Transitions */
+  --transition-fast: 0.1s;
+  --transition-normal: 0.2s;
+}
+
+/*=============== BASE ===============*/
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--body-font);
 }
 
 body {
-  padding-inline: 3rem;
+  padding-inline: var(--body-padding-inline);
 }
 
 button {
   cursor: pointer;
-  font-weight: 600;
+  font-weight: var(--font-semi-bold);
+  font-family: inherit;
 }
 
+input,
+button {
+  font: inherit;
+}
+
+/*=============== LAYOUT ===============*/
 .container {
-  text-align: center;
-  margin-inline: auto;
-  margin-block-start: 4rem;
   width: 100%;
-  max-width: 550px;
+  max-width: var(--container-max-width);
+  margin-inline: auto;
+  margin-block-start: var(--container-margin-top);
+  text-align: center;
 }
 
 .title {
-  font-size: 2rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
+  margin-bottom: var(--title-margin-bottom);
+  font-family: var(--title-font);
+  font-size: var(--big-font-size);
+  font-weight: var(--font-semi-bold);
 }
 
-
+/*=============== TASK INPUT ===============*/
 .task-input-container {
   display: flex;
-  border: 2px solid #000;
-  border-radius: 5px;
-  width: 100%;
-  height: 40px;
   align-items: center;
-  padding-inline: .5rem .13rem;
+  width: 100%;
+  height: var(--input-height);
+  padding-inline: var(--input-padding-inline);
+  border: var(--border-main);
+  border-radius: var(--radius-sm);
 }
 
 .task-input {
-  height: 100%;
   width: 80%;
+  height: 100%;
   border: none;
   outline: none;
-  border-radius: 15px;
+  border-radius: var(--radius-lg);
+  background-color: transparent;
+}
+
+.task-input::placeholder {
+  transition: color var(--transition-normal);
+}
+
+.task-input.empty::placeholder,
+.empty::placeholder {
+  color: var(--color-danger);
 }
 
 .task-btn {
   flex: 1;
   height: 90%;
-  background-color: #000;
-  border-radius: 5px;
-  color: #fff;
   border: none;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-black);
+  color: var(--color-white);
 }
 
-
-/* List */
+/*=============== TASK LIST ===============*/
 .output {
   display: flex;
   flex-direction: column;
-  gap: .5rem;
+  align-items: center;
+  justify-content: center;
+  gap: var(--output-gap);
   width: 100%;
-  margin-top: 2rem;
+  margin-top: var(--output-margin-top);
 }
 
 .checkbox-container {
@@ -78,61 +152,96 @@ button {
 .task-check {
   appearance: none;
   -webkit-appearance: none;
-  width: 20px;
-  height: 20px;
-  border: 2px solid #000;
-  border-radius: 5px;
-  transition: .1s;
+  flex-shrink: 0;
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
+  border: var(--border-main);
+  border-radius: var(--radius-sm);
+  transition: background-color var(--transition-fast);
 }
 
 .task-check:checked {
-  background-color: #555;
+  background-color: var(--color-gray);
 }
 
-.task-check:checked + span {
-  text-decoration: line-through;
-}
-
-.check-text {
-  margin-left: .25rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  flex: 1; 
+.check-container {
+  flex: 1;
+  min-width: 0;
+  margin-left: var(--text-gap);
   text-align: start;
 }
 
-.del-btn {
-  margin-left: auto;
-  height: 30px;
-  padding-inline: 10px;
-  background-color: #ff2233;
-  border-radius: 5px;
-  color: #fff;
-  border: none;
-  flex-shrink: 0;
+.check-text {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  color: var(--color-black);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  transition: opacity var(--transition-normal);
+  padding-inline-end: 1px;
 }
 
-/* Modal */
+.task-check:checked + .check-container .check-text {
+  opacity: .6;
+}
+
+.check-line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: var(--check-line-height);
+  background-color: var(--color-black);
+  transform: translateY(-50%) scaleX(0);
+  transform-origin: left;
+  will-change: transform;
+  pointer-events: none;
+}
+
+.del-btn {
+  flex-shrink: 0;
+  margin-left: auto;
+  height: var(--delete-btn-height);
+  padding-inline: var(--btn-padding-inline);
+  border: none;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-danger);
+  color: var(--color-white);
+}
+
+.no-task-message {
+  margin-inline: auto;
+  padding: 10px 15px;
+  height: 100%;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, .3);
+  opacity: .6;
+}
+
+/*=============== MODAL ===============*/
 .modal-container {
   position: fixed;
+  inset: 0;
+  z-index: 1000;
   display: none;
   align-items: center;
   justify-content: center;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  inset: 0;
-  background-color: rgba(0, 0, 0, .6);
+  background-color: var(--color-overlay);
 }
 
 .modal-box {
   width: 80%;
-  background-color: #fff;
-  max-width: 550px;
-  border: 4px solid #000;
-  border-radius: 10px;
-  padding: 1rem;
+  max-width: var(--container-max-width);
+  padding: var(--modal-padding);
+  border: var(--border-modal);
+  border-radius: var(--radius-md);
+  background-color: var(--color-white);
 }
 
 .modal-title {
@@ -140,29 +249,30 @@ button {
 }
 
 .modal-btns-container {
-  margin-inline: auto;
-  margin-top: 1rem;
   display: flex;
-  width: 100%;
   align-items: center;
   justify-content: space-evenly;
+  width: 100%;
+  margin-top: 1rem;
+  margin-inline: auto;
 }
 
 .modal-btn {
   width: 40%;
-  height: 40px;
-  border-radius: 10px;
+  height: var(--modal-btn-height);
+  border-radius: var(--radius-md);
 }
 
 .modal-confirm {
-  background-color: #ff2233;
-  color: #fff;
   border: none;
+  background-color: var(--color-danger);
+  color: var(--color-white);
 }
 
 .modal-cancel {
-  border: 3px solid #ff2233;
+  border: var(--border-cancel);
   background-color: transparent;
+  color: var(--color-black);
 }
 
 .show-modal {
